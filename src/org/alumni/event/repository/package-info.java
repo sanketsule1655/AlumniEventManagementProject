@@ -1,0 +1,1 @@
+package org.alumni.event.repository;
