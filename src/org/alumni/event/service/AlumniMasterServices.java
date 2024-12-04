@@ -33,4 +33,14 @@ public class AlumniMasterServices
 		int b = amr.deleteid(am);
 		return b;
 	}
+	public Vector<AlumniMasterModel> sortYearWiseAlumni()
+	{
+		Vector<AlumniMasterModel> v = amr.sortYearWiseAlumni();
+				return v;
+	}
+	public Vector<AlumniMasterModel> getSeniorAlumni()
+	{
+		Vector<AlumniMasterModel> v = amr.getSeniorAlumni();
+		return v;
+	}
 }

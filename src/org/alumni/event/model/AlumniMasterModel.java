@@ -9,7 +9,7 @@ public class AlumniMasterModel
 	private int age;
 	private String company;
 	private int bid;
-	
+	private BatchMasterModel bm;
 	public AlumniMasterModel()
 	{
 		
@@ -78,5 +78,13 @@ public class AlumniMasterModel
 	public void setBid(int bid) 
 	{
 		this.bid = bid;
+	}
+	public void setBatchMasterModel(BatchMasterModel bm)
+	{
+		this.bm=bm;
+	}
+	public BatchMasterModel getBatchMasterModel()
+	{
+		return bm;
 	}
 }

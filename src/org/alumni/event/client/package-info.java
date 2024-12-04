@@ -1,1 +1,0 @@
-package org.alumni.event.client;

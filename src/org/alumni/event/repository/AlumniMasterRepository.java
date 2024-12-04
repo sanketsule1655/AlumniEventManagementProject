@@ -7,6 +7,7 @@ import java.util.Vector;
 import org.alumni.event.config.DBHelper;
 import org.alumni.event.config.PathHelper;
 import org.alumni.event.model.AlumniMasterModel;
+import org.alumni.event.model.BatchMasterModel;
 
 public class AlumniMasterRepository extends DBHelper
 {
@@ -134,5 +135,67 @@ public class AlumniMasterRepository extends DBHelper
 			System.out.println("Error is:"+ex);
 		}
 		return 0;
+	}
+	public Vector<AlumniMasterModel> sortYearWiseAlumni()
+	{
+		v = new Vector<AlumniMasterModel>();
+		try
+		{
+			pstmt = conn.prepareStatement("select am.aid as Aid, am.Name as Alumni_Name, am.company as Company_Name, bm.batch_name as Year from AlumniMaster am inner join batchmaster bm on am.bid = bm.bid order by bm.batch_name asc");
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				AlumniMasterModel am = new AlumniMasterModel();
+				am.setAid(rs.getInt(1));
+				am.setName(rs.getString(2));
+				am.setCompany(rs.getString(3));
+				BatchMasterModel bm = new BatchMasterModel();
+	            bm.setBatch_name(rs.getString(4));
+				am.setBatchMasterModel(bm);
+			}
+			if(v.size()>0)
+			{
+				return v;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		catch(Exception ex)
+		{
+			return null;
+		}
+	}
+	public Vector<AlumniMasterModel> getSeniorAlumni()
+	{
+		v = new Vector<AlumniMasterModel>();
+		try
+		{
+			pstmt = conn.prepareStatement("select bm.batch_name as Year, am.name as Alumni_name, am.company as Company from alumnimaster am inner join batchmaster bm on am.bid = bm.bid where bm.batch_name in (select(batch_name)from batchmaster)");
+			rs = pstmt.executeQuery();
+			while(rs.next())
+			{
+				AlumniMasterModel am = new AlumniMasterModel();
+				BatchMasterModel bm = new BatchMasterModel();
+				bm.setBatch_name(rs.getString(1));
+				am.setBatchMasterModel(bm);
+				am.setName(rs.getString(2));
+				am.setCompany(rs.getString(3));
+				v.add(am);
+			}
+			if(v.size()>0)
+			{
+				return v;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		catch(Exception ex)
+		{
+			return null;
+		}
 	}
 }
